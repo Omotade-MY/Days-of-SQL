@@ -1,0 +1,14 @@
+/* Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). 
+If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically. */
+
+declare
+@maxlen int,
+@minlen int,
+@citymaxlen varchar(50),
+@cityminlen varchar(20)
+set @minlen = (SELECT MIN (LEN (CITY)) FROM STATION);
+set @maxlen = (SELECT MAX (LEN (CITY)) from STATION);
+SELECT Top 1 @cityminlen = CITY From STATION where (len(CITY) = @minlen) Order by CITY;
+select Top 1 @citymaxlen = CITY From STATION WHERE (len(CITY) = @maxlen) Order by CITY desc;
+print @cityminlen + ' ' + cast(@minlen as varchar);
+print @citymaxlen + ' ' + cast(@maxlen as varchar)
